@@ -1,19 +1,17 @@
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
+import routes from "./routes/index.js";
+import errorMiddleware from "./middleware/error.middleware.js";
 
 const app = express();
 
-// Middlewares
+// Core Middlewares
 app.use(cors());
 app.use(helmet());
 app.use(express.json());
 
-// Test Route
-app.get("/", (req, res) => {
-  res.status(200).json({
-    message: "API is running successfully !",
-  });
-});
-
+// API 
+app.use("/api/v1", routes);
+app.use(errorMiddleware);
 export default app;
