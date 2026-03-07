@@ -1,0 +1,36 @@
+.product-card {
+  background: linear-gradient(
+    to left,
+    rgba(223, 223, 223, 0.7),
+    rgba(224, 234, 255, 0.7)
+  );
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 1 140px;
+  max-width: 48%;
+  box-sizing: border-box;
+}
+
+.product-card img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+}
+
+.product-card h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0.5rem 0 0.25rem 0;
+}
+
+.product-card p {
+  font-size: 0.95rem;
+  color: #1f2937;
+  margin: 0;
+}

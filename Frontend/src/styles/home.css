@@ -1,0 +1,156 @@
+body{
+    margin: 0;
+}
+.home-page{
+    padding-top: 80px;
+}
+.home-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.7rem;
+  margin: 0 20px;
+  background: linear-gradient(to right,#517ED7,#D9D9D9);
+  border-radius: 25px;
+}
+.home-header-image img {
+  width: 400px;
+  max-height: 200px; 
+  object-fit: contain;
+}
+.home-header-text h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: white;
+}
+
+.home-header-text p {
+  margin-bottom: 1.5rem;
+  color: rgb(226, 233, 248);
+  font-size: 1.1rem;
+  max-width: 300px;
+}
+
+.shop-btn {
+  background-color: #1d4ed8;
+  color: white;
+  padding: 0.7rem 1.8rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.home-header-image img {
+  width: 400px;
+  object-fit: contain;
+}
+
+/* Categories */
+.categories {
+  margin: 2rem;
+}
+
+.categories h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.categories-list {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Products */
+.products {
+  margin: 2rem;
+}
+
+.products h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.products-list {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+/* Responsive*/
+@media screen and (max-width: 1024px) {
+  .home-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.5rem;
+  }
+  .home-header-image img {
+    width: 300px;
+    max-height: 180px;
+    margin-top: 1rem;
+  }
+  .home-header-text h1 {
+    font-size: 2rem;
+  }
+  .home-header-text p {
+    font-size: 1rem;
+  }
+   .products-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+  .product-card {
+    flex: 1 1 18%;
+    max-width: 48%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .home-header-image img {
+    width: 220px;
+    max-height: 140px;
+  }
+  .home-header-text h1 {
+    font-size: 1.6rem;
+  }
+  .home-header-text p {
+    font-size: 0.9rem;
+    max-width: 100%;
+  }
+.product-card {
+    width: 150px;
+    flex: 1 1 45%; /* 2 per row */
+    max-width: 45%;
+  }
+  .categories-list, .products-list {
+    justify-content: center;
+    gap: 0.8rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .home-header-image img {
+    width: 180px;
+    max-height: 120px;
+  }
+  .home-header-text h1 {
+    font-size: 1.4rem;
+  }
+  .home-header-text p {
+    font-size: 0.85rem;
+  }
+
+  .category-card {
+    width: 120px;
+  }
+  .product-card {
+    width: 120px;
+    flex: 1 1 45%;
+    max-width: 45%;
+  }
+}
