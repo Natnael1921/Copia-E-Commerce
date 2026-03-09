@@ -1,68 +1,57 @@
-import { useState, useContext } from "react"
-import { useNavigate } from "react-router-dom"
-import { AuthContext } from "../../context/AuthContext"
-import { loginUser,registerUser } from "../../services/authService"
-import "../../styles/Auth.css"
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+import { loginUser, registerUser } from "../../services/authService";
+import "../../styles/Auth.css";
 
 export default function Auth() {
+  const [isLogin, setIsLogin] = useState(true);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [isLogin, setIsLogin] = useState(true)
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const { login } = useContext(AuthContext);
 
-  const { login } = useContext(AuthContext)
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
-
       if (isLogin) {
-
-        const data = await loginUser(email, password)
-
-        login(data.user)
+        const data = await loginUser(email, password);
+        localStorage.setItem("token", data.token);
+        login(data.user);
 
         if (data.user.role === "admin") {
-          navigate("/admin/dashboard")
+          navigate("/admin/dashboard");
         } else {
-          navigate("/")
+          navigate("/");
         }
-
       } else {
+        await registerUser(name, email, password);
 
-        await registerUser(name, email, password)
-
-        alert("Account created. Please login.")
-        setIsLogin(true)
-
+        alert("Account created. Please login.");
+        setIsLogin(true);
       }
-
     } catch (error) {
-        console.error(error.message)
-      alert("Authentication failed")
+      console.error(error.message);
+      alert("Authentication failed");
     }
-  }
+  };
 
   return (
-
     <div className="auth-container">
-
       <div className="auth-card">
-
         <h2>{isLogin ? "Welcome Back" : "Create Account"}</h2>
 
         <form onSubmit={handleSubmit}>
-
           {!isLogin && (
             <input
               type="text"
               placeholder="Name"
               value={name}
-              onChange={(e)=>setName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
             />
           )}
 
@@ -70,28 +59,23 @@ export default function Auth() {
             type="email"
             placeholder="Email"
             value={email}
-            onChange={(e)=>setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
 
           <input
             type="password"
             placeholder="Password"
             value={password}
-            onChange={(e)=>setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button type="submit">
-            {isLogin ? "Login" : "Register"}
-          </button>
-
+          <button type="submit">{isLogin ? "Login" : "Register"}</button>
         </form>
 
-        <p onClick={()=>setIsLogin(!isLogin)} className="switch-text">
+        <p onClick={() => setIsLogin(!isLogin)} className="switch-text">
           {isLogin ? "Create an account" : "Already have an account?"}
         </p>
-
       </div>
-
     </div>
-  )
+  );
 }

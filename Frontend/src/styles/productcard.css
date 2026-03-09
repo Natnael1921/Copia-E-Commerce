@@ -1,36 +1,98 @@
 .product-card {
+  position: relative;
   background: linear-gradient(
     to left,
     rgba(223, 223, 223, 0.7),
     rgba(224, 234, 255, 0.7)
   );
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 1rem;
-  text-align: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  flex: 1 1 140px;
-  max-width: 48%;
-  box-sizing: border-box;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.product-card img {
-  width: 120px;
-  height: 120px;
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+}
+
+.product-image-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.product-image-wrapper img {
+  width: 100%;
+  max-width: 140px;
+  height: 140px;
   object-fit: contain;
-  margin-bottom: 0.5rem;
 }
 
 .product-card h3 {
   font-size: 1rem;
   font-weight: 600;
-  margin: 0.5rem 0 0.25rem 0;
+  color: #1f2937;
+  margin: 0.4rem 0;
 }
 
 .product-card p {
   font-size: 0.95rem;
-  color: #1f2937;
-  margin: 0;
+  font-weight: 500;
+  color: #2563eb;
+  margin-bottom: 0.6rem;
+}
+
+/* Cart button */
+
+.cart-overlay {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+  background: white;
+  border-radius: 50%;
+  padding: 6px;
+  box-shadow: 0 3px 8px rgba(47, 32, 214, 0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cart-overlay:hover {
+  transform: scale(1.15);
+  box-shadow: 0 5px 12px rgba(7, 66, 227, 0.25);
+}
+
+/* Responsive grid  */
+
+@media (max-width: 768px) {
+  .product-card {
+    padding: 0.9rem;
+  }
+
+  .product-image-wrapper img {
+    max-width: 120px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-card h3 {
+    font-size: 0.9rem;
+  }
+
+  .product-card p {
+    font-size: 0.85rem;
+  }
+
+  .cart-overlay {
+    width: 30px;
+    height: 30px;
+  }
 }
