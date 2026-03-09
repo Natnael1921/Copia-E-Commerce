@@ -24,7 +24,9 @@ const Navbar = () => {
     <nav className="navbar">
       {/* Left Side */}
       <div className="navbar-left">
-        <div className="logo-container">
+        <div className="logo-container"
+        onClick={() => navigate("/")}
+        >
           <img src="/logo.png" alt="Copia Logo" className="logo" />
           <span>Copia</span>
         </div>

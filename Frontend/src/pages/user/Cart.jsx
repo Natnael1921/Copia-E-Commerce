@@ -7,10 +7,12 @@ import {
   clearCart,
 } from "../../services/cartService";
 import "../../styles/cart.css";
-
+import { placeOrder } from "../../services/orderService";
+import { useNavigate } from "react-router-dom";
 export default function CartPage() {
   const [cartItems, setCartItems] = useState([]);
-
+  const [showCheckout, setShowCheckout] = useState(false);
+  const navigate = useNavigate();
   const fetchCart = async () => {
     try {
       const data = await getCart();
@@ -38,7 +40,17 @@ export default function CartPage() {
     await clearCart();
     fetchCart();
   };
-
+  const handleCheckout = async () => {
+    try {
+      await placeOrder();
+      await clearCart();
+      setShowCheckout(false);
+      navigate("/orders");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to place order");
+    }
+  };
   const total = cartItems.reduce(
     (sum, item) => sum + item.product.price * item.quantity,
     0,
@@ -103,13 +115,41 @@ export default function CartPage() {
               <span>${total.toFixed(2)}</span>
             </div>
 
-            <button className="checkout-btn">Checkout</button>
+            <button
+              className="checkout-btn"
+              onClick={() => setShowCheckout(true)}
+            >
+              Checkout
+            </button>
 
             <button className="clear-btn" onClick={handleClearCart}>
               Clear Cart
             </button>
           </div>
         </div>
+        {showCheckout && (
+          <div className="checkout-modal">
+            <div className="checkout-box">
+              <h2>Confirm Order</h2>
+
+              <p>Total Amount</p>
+              <h3>${total.toFixed(2)}</h3>
+
+              <div className="checkout-actions">
+                <button
+                  className="cancel-btn"
+                  onClick={() => setShowCheckout(false)}
+                >
+                  Cancel
+                </button>
+
+                <button className="confirm-btn" onClick={handleCheckout}>
+                  Place Order
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
