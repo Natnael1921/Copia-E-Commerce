@@ -5,6 +5,7 @@ import AdminDashboard from "../pages/admin/AdminDashboard";
 import Orders from "../pages/user/Orders";
 import Cart from "../pages/user/Cart";
 import ProtectedRoute from "../components/ProtectedRoute";
+import AdminProducts from "../pages/admin/AdminProducts";
 
 const AppRoutes = () => {
   return (
@@ -21,6 +22,14 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute adminOnly={true}>
               <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/products"
+          element={
+            <ProtectedRoute adminOnly={true}>
+              <AdminProducts />
             </ProtectedRoute>
           }
         />
