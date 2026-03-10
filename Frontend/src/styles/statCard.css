@@ -1,0 +1,33 @@
+.stat-card{
+background:#ffffff;
+padding:18px;
+border-radius:12px;
+border:1px solid #e6eefc;
+transition:all .2s ease;
+}
+
+.stat-card:hover{
+box-shadow:0 10px 25px rgba(37,99,235,0.08);
+}
+
+.stat-title{
+font-size:13px;
+color:#64748b;
+margin-bottom:6px;
+}
+
+.stat-value{
+font-size:20px;
+font-weight:600;
+color:#1e293b;
+}
+.Pending{
+    color: rgb(255, 192, 74);
+}
+
+.Delivered{
+color: green;
+}
+.Rejected{
+    color: red;
+}
