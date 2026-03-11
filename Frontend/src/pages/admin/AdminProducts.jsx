@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AdminSidebar from "../../components/AdminSidebar";
 import ProductModal from "../../components/ProductModal";
 import ProductRow from "../../components/ProductRow";
@@ -15,6 +15,7 @@ import "../../styles/adminProducts.css";
 export default function AdminProducts() {
   const { products, loading } = useProducts();
 
+  const [productList, setProductList] = useState([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [editing, setEditing] = useState(null);
@@ -23,19 +24,58 @@ export default function AdminProducts() {
     setSidebarOpen(!sidebarOpen);
   };
 
+  // Sync fetched products to local state
+  useEffect(() => {
+    setProductList(products);
+  }, [products]);
+
+  // CREATE PRODUCT
   const handleCreate = async (formData) => {
-    await createProduct(formData);
-    window.location.reload();
+    try {
+      const newProduct = await createProduct(formData);
+
+      setProductList((prev) => [newProduct, ...prev]);
+
+      alert(" Product added successfully!");
+
+      setShowModal(false);
+    } catch (err) {
+      console.error(err);
+      alert(" Failed to add product");
+    }
   };
 
+  // UPDATE PRODUCT
   const handleUpdate = async (formData) => {
-    await updateProduct(editing._id, formData);
-    window.location.reload();
+    try {
+      const updated = await updateProduct(editing._id, formData);
+
+      setProductList((prev) =>
+        prev.map((p) => (p._id === editing._id ? updated : p))
+      );
+
+      alert(" Product updated successfully!");
+
+      setEditing(null);
+      setShowModal(false);
+    } catch (err) {
+      console.error(err);
+      alert(" Failed to update product");
+    }
   };
 
+  // DELETE PRODUCT
   const handleDelete = async (id) => {
-    await deleteProduct(id);
-    window.location.reload();
+    try {
+      await deleteProduct(id);
+
+      setProductList((prev) => prev.filter((p) => p._id !== id));
+
+      alert(" Product deleted successfully!");
+    } catch (err) {
+      console.error(err);
+      alert(" Failed to delete product");
+    }
   };
 
   return (
@@ -52,7 +92,10 @@ export default function AdminProducts() {
 
           <button
             className="add-product-btn"
-            onClick={() => setShowModal(true)}
+            onClick={() => {
+              setEditing(null);
+              setShowModal(true);
+            }}
           >
             + Add Product
           </button>
@@ -74,7 +117,7 @@ export default function AdminProducts() {
               </thead>
 
               <tbody>
-                {products.map((p) => (
+                {productList.map((p) => (
                   <ProductRow
                     key={p._id}
                     product={p}
