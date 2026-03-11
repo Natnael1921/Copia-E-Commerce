@@ -6,13 +6,12 @@ import Orders from "../pages/user/Orders";
 import Cart from "../pages/user/Cart";
 import ProtectedRoute from "../components/ProtectedRoute";
 import AdminProducts from "../pages/admin/AdminProducts";
+import AdminOrders from "../pages/admin/AdminOrders";
 
 const AppRoutes = () => {
   return (
     <BrowserRouter>
-
       <Routes>
-
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Auth />} />
 
@@ -30,6 +29,14 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute adminOnly={true}>
               <AdminProducts />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/orders"
+          element={
+            <ProtectedRoute adminOnly={true}>
+              <AdminOrders />
             </ProtectedRoute>
           }
         />
@@ -52,7 +59,6 @@ const AppRoutes = () => {
           }
         />
       </Routes>
-
     </BrowserRouter>
   );
 };
