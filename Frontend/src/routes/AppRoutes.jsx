@@ -7,6 +7,7 @@ import Cart from "../pages/user/Cart";
 import ProtectedRoute from "../components/ProtectedRoute";
 import AdminProducts from "../pages/admin/AdminProducts";
 import AdminOrders from "../pages/admin/AdminOrders";
+import AdminCustomers from "../pages/admin/AdminCustomers";
 
 const AppRoutes = () => {
   return (
@@ -37,6 +38,14 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute adminOnly={true}>
               <AdminOrders />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/customers"
+          element={
+            <ProtectedRoute adminOnly={true}>
+              <AdminCustomers />
             </ProtectedRoute>
           }
         />
