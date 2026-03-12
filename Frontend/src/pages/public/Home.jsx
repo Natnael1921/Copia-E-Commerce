@@ -4,7 +4,7 @@ import ProductCard from "../../components/ProductCard";
 import CategoryCard from "../../components/CategoryCard";
 import { useProducts } from "../../hooks/useProducts";
 import "../../styles/home.css";
-
+import Loader from "../../components/Loader";
 const Home = () => {
   const { products, loading } = useProducts();
 
@@ -19,7 +19,10 @@ const Home = () => {
       <header className="home-header">
         <div className="home-header-text">
           <h1>Discover the Future Shopping</h1>
-          <p>Shop the latest trends and best deals for electronics, fashion and more</p>
+          <p>
+            Shop the latest trends and best deals for electronics, fashion and
+            more
+          </p>
           <button className="shop-btn">Shop Now</button>
         </div>
         <div className="home-header-image">
@@ -42,7 +45,7 @@ const Home = () => {
         <h2>Products</h2>
         <div className="products-list">
           {loading ? (
-            <p>Loading...</p>
+            <Loader />
           ) : (
             displayProducts.map((prod, idx) => (
               <ProductCard key={prod._id || idx} product={prod} />

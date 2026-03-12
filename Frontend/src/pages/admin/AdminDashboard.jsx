@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import AdminSidebar from "../../components/AdminSidebar";
 import StatCard from "../../components/StatCard";
+import Loader from "../../components/Loader";
 import { getAllProducts, getAllOrders } from "../../services/adminService";
 import "../../styles/adminDashboard.css";
 
 export default function AdminDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const [stats, setStats] = useState({
     products: 0,
@@ -26,7 +28,7 @@ export default function AdminDashboard() {
 
       const totalSales = orders.reduce(
         (sum, order) => sum + (order.totalPrice || 0),
-        0,
+        0
       );
 
       const customers = new Set(orders.map((o) => o.user)).size;
@@ -40,6 +42,8 @@ export default function AdminDashboard() {
       setRecentOrders(orders.slice(0, 5));
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -56,47 +60,50 @@ export default function AdminDashboard() {
           <button className="hamburger" onClick={toggleSidebar}>
             ☰
           </button>
-
           <h2>Dashboard</h2>
         </div>
 
-        <div className="stats-grid">
-          <StatCard title="Total Products" value={stats.products} />
+        {loading ? (
+          <Loader />
+        ) : (
+          <>
+            <div className="stats-grid">
+              <StatCard title="Total Products" value={stats.products} />
+              <StatCard title="Total Customers" value={stats.customers} />
+              <StatCard title="Total Sales" value={`$${stats.sales}`} />
+            </div>
 
-          <StatCard title="Total Customers" value={stats.customers} />
+            <div className="recent-orders">
+              <h3>Recent Orders</h3>
 
-          <StatCard title="Total Sales" value={`$${stats.sales}`} />
-        </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Order</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
 
-        <div className="recent-orders">
-          <h3>Recent Orders</h3>
+                <tbody>
+                  {recentOrders.map((order) => (
+                    <tr key={order._id}>
+                      <td>#{order._id.slice(-6)}</td>
 
-          <table>
-            <thead>
-              <tr>
-                <th>Order</th>
-                <th>Status</th>
-                <th>Total</th>
-              </tr>
-            </thead>
+                      <td>
+                        <span className={`status ${order.status}`}>
+                          {order.status}
+                        </span>
+                      </td>
 
-            <tbody>
-              {recentOrders.map((order) => (
-                <tr key={order._id}>
-                  <td>#{order._id.slice(-6)}</td>
-
-                  <td>
-                    <span className={`status ${order.status}`}>
-                      {order.status}
-                    </span>
-                  </td>
-
-                  <td>${order.totalPrice}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                      <td>${order.totalPrice}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

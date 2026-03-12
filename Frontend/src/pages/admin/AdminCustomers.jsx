@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import AdminSidebar from "../../components/AdminSidebar";
 import "../../styles/adminCustomers.css";
 import { getAllUsers } from "../../services/adminUserService";
+import Loader from "../../components/Loader";
 
 export default function AdminCustomers() {
   const [users, setUsers] = useState([]);
@@ -41,7 +42,7 @@ export default function AdminCustomers() {
         </div>
 
         {loading ? (
-          <p className="loading">Loading users...</p>
+          <Loader />
         ) : (
           <table className="customers-table">
             <thead>

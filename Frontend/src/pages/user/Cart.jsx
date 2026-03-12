@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
+import Loader from "../../components/Loader";
 import {
   getCart,
   updateCartItem,
@@ -9,16 +10,21 @@ import {
 import "../../styles/cart.css";
 import { placeOrder } from "../../services/orderService";
 import { useNavigate } from "react-router-dom";
+
 export default function CartPage() {
   const [cartItems, setCartItems] = useState([]);
   const [showCheckout, setShowCheckout] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
   const fetchCart = async () => {
     try {
       const data = await getCart();
       setCartItems(data.items || []);
     } catch (err) {
       console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -40,6 +46,7 @@ export default function CartPage() {
     await clearCart();
     fetchCart();
   };
+
   const handleCheckout = async () => {
     try {
       await placeOrder();
@@ -51,6 +58,7 @@ export default function CartPage() {
       alert("Failed to place order");
     }
   };
+
   const total = cartItems.reduce(
     (sum, item) => sum + item.product.price * item.quantity,
     0,
@@ -63,70 +71,81 @@ export default function CartPage() {
       <div className="cart-page">
         <h1>Your Cart</h1>
 
-        {cartItems.length === 0 && (
-          <p className="empty-cart">Your cart is empty</p>
-        )}
+        {loading ? (
+          <Loader />
+        ) : (
+          <>
+            {cartItems.length === 0 && (
+              <p className="empty-cart">Your cart is empty</p>
+            )}
 
-        <div className="cart-container">
-          <div className="cart-items">
-            {cartItems.map((item) => (
-              <div key={item._id} className="cart-item">
-                <img
-                  src={item.product.image || "/placeholder.png"}
-                  alt={item.product.name}
-                />
+            <div className="cart-container">
+              <div className="cart-items">
+                {cartItems.map((item) => (
+                  <div key={item._id} className="cart-item">
+                    <img
+                      src={item.product.image || "/placeholder.png"}
+                      alt={item.product.name}
+                    />
 
-                <div className="cart-info">
-                  <h3>{item.product.name}</h3>
-                  <p>${item.product.price}</p>
-                </div>
+                    <div className="cart-info">
+                      <h3>{item.product.name}</h3>
+                      <p>${item.product.price}</p>
+                    </div>
 
-                <div className="cart-qty">
-                  <button
-                    onClick={() => changeQuantity(item._id, item.quantity - 1)}
-                  >
-                    -
-                  </button>
+                    <div className="cart-qty">
+                      <button
+                        onClick={() =>
+                          changeQuantity(item._id, item.quantity - 1)
+                        }
+                      >
+                        -
+                      </button>
 
-                  <span>{item.quantity}</span>
+                      <span>{item.quantity}</span>
 
-                  <button
-                    onClick={() => changeQuantity(item._id, item.quantity + 1)}
-                  >
-                    +
-                  </button>
+                      <button
+                        onClick={() =>
+                          changeQuantity(item._id, item.quantity + 1)
+                        }
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    <button
+                      className="remove-btn"
+                      onClick={() => removeItem(item._id)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              <div className="cart-summary">
+                <h2>Order Summary</h2>
+
+                <div className="summary-row">
+                  <span>Total</span>
+                  <span>${total.toFixed(2)}</span>
                 </div>
 
                 <button
-                  className="remove-btn"
-                  onClick={() => removeItem(item._id)}
+                  className="checkout-btn"
+                  onClick={() => setShowCheckout(true)}
                 >
-                  Remove
+                  Checkout
+                </button>
+
+                <button className="clear-btn" onClick={handleClearCart}>
+                  Clear Cart
                 </button>
               </div>
-            ))}
-          </div>
-
-          <div className="cart-summary">
-            <h2>Order Summary</h2>
-
-            <div className="summary-row">
-              <span>Total</span>
-              <span>${total.toFixed(2)}</span>
             </div>
+          </>
+        )}
 
-            <button
-              className="checkout-btn"
-              onClick={() => setShowCheckout(true)}
-            >
-              Checkout
-            </button>
-
-            <button className="clear-btn" onClick={handleClearCart}>
-              Clear Cart
-            </button>
-          </div>
-        </div>
         {showCheckout && (
           <div className="checkout-modal">
             <div className="checkout-box">

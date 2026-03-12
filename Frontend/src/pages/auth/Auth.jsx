@@ -3,19 +3,21 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { loginUser, registerUser } from "../../services/authService";
 import "../../styles/Auth.css";
+import Loader from "../../components/Loader";
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const { login } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       if (isLogin) {
@@ -37,6 +39,8 @@ export default function Auth() {
     } catch (error) {
       console.error(error.message);
       alert("Authentication failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -68,8 +72,9 @@ export default function Auth() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-
-          <button type="submit">{isLogin ? "Login" : "Register"}</button>
+          <button type="submit">
+            {loading ? <Loader /> : isLogin ? "Login" : "Register"}
+          </button>
         </form>
 
         <p onClick={() => setIsLogin(!isLogin)} className="switch-text">

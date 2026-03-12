@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import AdminSidebar from "../../components/AdminSidebar";
 import "../../styles/adminOrders.css";
+import Loader from "../../components/Loader";
 
 import {
   getAllOrders,
@@ -56,7 +57,7 @@ export default function AdminOrders() {
         </div>
 
         {loading ? (
-          <p className="loading">Loading orders...</p>
+          <Loader />
         ) : (
           <table className="orders-table">
             <thead>

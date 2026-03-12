@@ -3,6 +3,7 @@ import AdminSidebar from "../../components/AdminSidebar";
 import ProductModal from "../../components/ProductModal";
 import ProductRow from "../../components/ProductRow";
 import { useProducts } from "../../hooks/useProducts";
+import Loader from "../../components/Loader";
 
 import {
   createProduct,
@@ -51,7 +52,7 @@ export default function AdminProducts() {
       const updated = await updateProduct(editing._id, formData);
 
       setProductList((prev) =>
-        prev.map((p) => (p._id === editing._id ? updated : p))
+        prev.map((p) => (p._id === editing._id ? updated : p)),
       );
 
       alert(" Product updated successfully!");
@@ -103,7 +104,7 @@ export default function AdminProducts() {
 
         <div className="products-table">
           {loading ? (
-            <p>Loading...</p>
+            <Loader />
           ) : (
             <table>
               <thead>
