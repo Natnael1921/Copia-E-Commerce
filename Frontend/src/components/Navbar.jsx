@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../styles/navbar.css";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
@@ -7,7 +7,29 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { user, logout } = useContext(AuthContext);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedQuery(searchQuery);
+    }, 400); // delay
 
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    if (!debouncedQuery.trim()) {
+      navigate("/"); 
+      return;
+    }
+
+    navigate(`/?search=${debouncedQuery}`);
+  }, [debouncedQuery, navigate]);
+  const handleSearch = () => {
+    if (!searchQuery.trim()) return;
+
+    navigate(`/?search=${searchQuery}`);
+  };
   const handleAuthButton = () => {
     if (user) {
       logout();
@@ -39,8 +61,11 @@ const Navbar = () => {
               type="text"
               placeholder="Search products..."
               className="search-input"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <button className="search-btn">
+
+            <button className="search-btn" onClick={handleSearch}>
               <img src="/searchIcon.png" alt="search" />
             </button>
           </div>

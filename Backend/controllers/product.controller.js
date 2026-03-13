@@ -35,10 +35,25 @@ export const createProduct = async (req, res, next) => {
   }
 };
 
-/* GET ALL PRODUCTS */
+/* GET ALL PRODUCTS + SEARCH */
 export const getProducts = async (req, res, next) => {
   try {
-    const products = await Product.find();
+    const search = req.query.search;
+
+    let query = {};
+
+    if (search) {
+      query = {
+        $or: [
+          { category: { $regex: search, $options: "i" } },
+          { name: { $regex: search, $options: "i" } },
+          { description: { $regex: search, $options: "i" } },
+          { brand: { $regex: search, $options: "i" } },
+        ],
+      };
+    }
+
+    const products = await Product.find(query);
 
     res.json(products);
   } catch (error) {
