@@ -12,6 +12,8 @@
   flex-direction: column;
   justify-content: space-between;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+   width: 150px;
+  min-height: 230px;
 }
 
 .product-card:hover {
@@ -39,6 +41,9 @@
   font-weight: 600;
   color: #1f2937;
   margin: 0.4rem 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .product-card p {
