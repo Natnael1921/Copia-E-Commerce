@@ -1,95 +1,105 @@
-.admin-container{
-display:flex;
-min-height:100vh;
-background:#f3f7ff;
+.admin-container {
+  display: flex;
+  min-height: 100vh;
+  background: #f3f7ff;
 }
 
 /* main */
 
-.admin-main{
-flex:1;
-margin-left:250px;
-padding:28px;
+.admin-main {
+  flex: 1;
+  margin-left: 250px;
+  padding: 28px;
 }
 
 /* topbar */
 
-.admin-topbar{
-display:flex;
-align-items:center;
-gap:16px;
-margin-bottom:28px;
+.admin-topbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
 }
 
-.admin-topbar h2{
-font-size:20px;
-font-weight:600;
-color:#1e293b;
+.admin-topbar h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1e293b;
 }
 
-.hamburger{
-display:none;
-background:none;
-border:none;
-font-size:22px;
-cursor:pointer;
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
 }
 
 /* stats */
 
-.stats-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:18px;
-margin-bottom:30px;
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  margin-bottom: 30px;
 }
 
 /* orders */
 
-.recent-orders{
-background:white;
-border-radius:12px;
-padding:20px;
-border:1px solid #e6eefc;
+.recent-orders {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #e6eefc;
 }
 
-.recent-orders h3{
-font-size:16px;
-margin-bottom:15px;
-color:#1e293b;
+.recent-orders h3 {
+  font-size: 16px;
+  margin-bottom: 15px;
+  color: #1e293b;
 }
 
-.recent-orders table{
-width:100%;
-border-collapse:collapse;
+.recent-orders table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.recent-orders th{
-text-align:left;
-font-size:13px;
-color:#64748b;
-padding:10px;
-border-bottom:1px solid #e6eefc;
+.recent-orders th {
+  text-align: left;
+  font-size: 13px;
+  color: #64748b;
+  padding: 10px;
+  border-bottom: 1px solid #e6eefc;
 }
 
-.recent-orders td{
-padding:12px 10px;
-font-size:14px;
-border-bottom:1px solid #f1f5f9;
-color:#334155;
+.recent-orders td {
+  padding: 12px 10px;
+  font-size: 14px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
 }
 
 /* responsive */
 
-@media(max-width:900px){
+@media (max-width: 900px) {
+  .admin-main {
+    margin-left: 0;
+    padding: 22px;
+  }
 
-.admin-main{
-margin-left:0;
-padding:22px;
+  .hamburger {
+    display: block;
+  }
 }
-
-.hamburger{
-display:block;
+.status-Pending {
+  color: #f0ad4e;
 }
-
+.status-processing {
+  color: #4da8da;
+}
+.status-Delivered {
+  color: #5cb85c;
+}
+.status-Cancelled {
+  color: #d9534f;
 }

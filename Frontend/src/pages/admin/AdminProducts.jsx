@@ -4,7 +4,7 @@ import ProductModal from "../../components/ProductModal";
 import ProductRow from "../../components/ProductRow";
 import { useProducts } from "../../hooks/useProducts";
 import Loader from "../../components/Loader";
-
+import { toastSuccess, toastError, toastConfirm } from "../../components/Toast";
 import {
   createProduct,
   updateProduct,
@@ -37,12 +37,12 @@ export default function AdminProducts() {
 
       setProductList((prev) => [newProduct, ...prev]);
 
-      alert(" Product added successfully!");
+      toastSuccess("Product added successfully!");
 
       setShowModal(false);
     } catch (err) {
       console.error(err);
-      alert(" Failed to add product");
+      toastError("Failed to add product");
     }
   };
 
@@ -55,28 +55,30 @@ export default function AdminProducts() {
         prev.map((p) => (p._id === editing._id ? updated : p)),
       );
 
-      alert(" Product updated successfully!");
+      toastError("Failed to add product");
 
       setEditing(null);
       setShowModal(false);
     } catch (err) {
       console.error(err);
-      alert(" Failed to update product");
+      toastError("Failed to update product");
     }
   };
 
   // DELETE PRODUCT
-  const handleDelete = async (id) => {
-    try {
-      await deleteProduct(id);
+  const handleDelete = (id) => {
+    toastConfirm("Are you sure you want to delete this product?", async () => {
+      try {
+        await deleteProduct(id);
 
-      setProductList((prev) => prev.filter((p) => p._id !== id));
+        setProductList((prev) => prev.filter((p) => p._id !== id));
 
-      alert(" Product deleted successfully!");
-    } catch (err) {
-      console.error(err);
-      alert(" Failed to delete product");
-    }
+        toastSuccess("Product deleted successfully!");
+      } catch (err) {
+        console.error(err);
+        toastError("Failed to delete product");
+      }
+    });
   };
 
   return (

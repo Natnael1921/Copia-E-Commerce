@@ -91,7 +91,7 @@ export default function AdminDashboard() {
                       <td>#{order._id.slice(-6)}</td>
 
                       <td>
-                        <span className={`status ${order.status}`}>
+                        <span className={`status-${order.status}`}>
                           {order.status}
                         </span>
                       </td>

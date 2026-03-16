@@ -3,7 +3,7 @@ import AdminSidebar from "../../components/AdminSidebar";
 import "../../styles/adminCustomers.css";
 import { getAllUsers } from "../../services/adminUserService";
 import Loader from "../../components/Loader";
-
+import { toastError } from "../../components/Toast";
 export default function AdminCustomers() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -20,7 +20,7 @@ export default function AdminCustomers() {
         setUsers(data);
       } catch (err) {
         console.error(err);
-        alert("Failed to fetch users");
+        toastError("Failed to fetch users");
       } finally {
         setLoading(false);
       }

@@ -10,7 +10,7 @@ import {
 import "../../styles/cart.css";
 import { placeOrder } from "../../services/orderService";
 import { useNavigate } from "react-router-dom";
-
+import { toastError } from "../../components/Toast";
 export default function CartPage() {
   const [cartItems, setCartItems] = useState([]);
   const [showCheckout, setShowCheckout] = useState(false);
@@ -55,7 +55,7 @@ export default function CartPage() {
       navigate("/orders");
     } catch (err) {
       console.error(err);
-      alert("Failed to place order");
+      toastError("Failed to place order");
     }
   };
 

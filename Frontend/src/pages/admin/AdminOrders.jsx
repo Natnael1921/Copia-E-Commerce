@@ -7,6 +7,7 @@ import {
   getAllOrders,
   updateOrderStatus,
 } from "../../services/adminOrderService";
+import { toastSuccess, toastError } from "../../components/Toast";
 
 export default function AdminOrders() {
   const [orders, setOrders] = useState([]);
@@ -23,7 +24,7 @@ export default function AdminOrders() {
         setOrders(data);
       } catch (err) {
         console.error(err);
-        alert("Failed to fetch orders");
+        toastError("Failed to fetch orders");
       } finally {
         setLoading(false);
       }
@@ -37,10 +38,10 @@ export default function AdminOrders() {
     try {
       const updated = await updateOrderStatus(id, status);
       setOrders((prev) => prev.map((o) => (o._id === id ? updated : o)));
-      alert(`Order status updated to "${status}"`);
+      toastSuccess(`Order status updated to "${status}"`);
     } catch (err) {
       console.error(err);
-      alert("Failed to update status");
+      toastError("Failed to update status");
     }
   };
 
@@ -84,7 +85,7 @@ export default function AdminOrders() {
                         : "No items"}
                     </td>
                     <td>${order.totalPrice?.toFixed(2)}</td>
-                    <td>{order.status}</td>
+                    <td className={`status-${order.status}`}>{order.status}</td>
                     <td>
                       {/* Desktop: show buttons */}
                       <div className="status-buttons desktop-only">

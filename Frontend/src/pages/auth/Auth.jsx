@@ -4,7 +4,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { loginUser, registerUser } from "../../services/authService";
 import "../../styles/Auth.css";
 import Loader from "../../components/Loader";
-
+import { toastSuccess, toastError } from "../../components/Toast";
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
   const [name, setName] = useState("");
@@ -24,7 +24,7 @@ export default function Auth() {
         const data = await loginUser(email, password);
         localStorage.setItem("token", data.token);
         login(data.user);
-
+        toastSuccess("Login successful!");
         if (data.user.role === "admin") {
           navigate("/admin/dashboard");
         } else {
@@ -33,12 +33,12 @@ export default function Auth() {
       } else {
         await registerUser(name, email, password);
 
-        alert("Account created. Please login.");
+        toastSuccess("Account created successfully. Please login.");
         setIsLogin(true);
       }
     } catch (error) {
       console.error(error.message);
-      alert("Authentication failed");
+      toastError("Authentication failed");
     } finally {
       setLoading(false);
     }

@@ -110,3 +110,15 @@ select {
     cursor: pointer;
   }
 }
+.status-Pending {
+  color: #f0ad4e; 
+}
+.status-Processing {
+  color: #4da8da; 
+}
+.status-Delivered {
+  color: #5cb85c; 
+}
+.status-Cancelled {
+  color: #d9534f; 
+}
