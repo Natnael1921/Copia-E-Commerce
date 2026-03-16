@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import AdminSidebar from "../../components/AdminSidebar";
-import "../../styles/adminOrders.css";
-import Loader from "../../components/Loader";
+import AdminSidebar from "../../components/admin/AdminSidebar";
+import "../../styles/admin/adminOrders.css";
+import Loader from "../../components/shared/Loader";
 
 import {
   getAllOrders,
   updateOrderStatus,
 } from "../../services/adminOrderService";
-import { toastSuccess, toastError } from "../../components/Toast";
+import { toastSuccess, toastError } from "../../components/shared/Toast";
 
 export default function AdminOrders() {
   const [orders, setOrders] = useState([]);

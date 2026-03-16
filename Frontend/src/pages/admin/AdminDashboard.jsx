@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import AdminSidebar from "../../components/AdminSidebar";
-import StatCard from "../../components/StatCard";
-import Loader from "../../components/Loader";
+import AdminSidebar from "../../components/admin/AdminSidebar";
+import StatCard from "../../components/admin/StatCard";
+import Loader from "../../components/shared/Loader";
 import { getAllProducts, getAllOrders } from "../../services/adminService";
-import "../../styles/adminDashboard.css";
+import "../../styles/admin/adminDashboard.css";
 
 export default function AdminDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -28,7 +28,7 @@ export default function AdminDashboard() {
 
       const totalSales = orders.reduce(
         (sum, order) => sum + (order.totalPrice || 0),
-        0
+        0,
       );
 
       const customers = new Set(orders.map((o) => o.user)).size;

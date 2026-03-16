@@ -4,7 +4,7 @@ import Auth from "../pages/auth/Auth";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import Orders from "../pages/user/Orders";
 import Cart from "../pages/user/Cart";
-import ProtectedRoute from "../components/ProtectedRoute";
+import ProtectedRoute from "../components/shared/ProtectedRoute";
 import AdminProducts from "../pages/admin/AdminProducts";
 import AdminOrders from "../pages/admin/AdminOrders";
 import AdminCustomers from "../pages/admin/AdminCustomers";

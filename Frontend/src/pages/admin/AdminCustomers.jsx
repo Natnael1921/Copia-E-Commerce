@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import AdminSidebar from "../../components/AdminSidebar";
-import "../../styles/adminCustomers.css";
+import AdminSidebar from "../../components/admin/AdminSidebar";
+import "../../styles/admin/adminCustomers.css";
 import { getAllUsers } from "../../services/adminUserService";
-import Loader from "../../components/Loader";
-import { toastError } from "../../components/Toast";
+import Loader from "../../components/shared/Loader";
+import { toastError } from "../../components/shared/Toast";
 export default function AdminCustomers() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);

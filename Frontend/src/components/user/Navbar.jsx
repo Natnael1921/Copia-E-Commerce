@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import "../styles/navbar.css";
+import "../../styles/user/navbar.css";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const Navbar = () => {
 
   useEffect(() => {
     if (!debouncedQuery.trim()) {
-      navigate("/"); 
+      navigate("/");
       return;
     }
 

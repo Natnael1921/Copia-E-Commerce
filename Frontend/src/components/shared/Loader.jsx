@@ -1,5 +1,5 @@
 import { ScaleLoader} from "react-spinners";
-import "../styles/loader.css";
+import "../../styles/shared/loader.css";
 
 export default function Loader() {
   return (

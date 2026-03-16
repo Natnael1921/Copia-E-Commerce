@@ -1,8 +1,8 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { toastSuccess } from "./Toast";
-import "../styles/adminSidebar.css";
+import { AuthContext } from "../../context/AuthContext";
+import { toastSuccess } from "../shared/Toast";
+import "../../styles/admin/adminSidebar.css";
 
 export default function AdminSidebar({ open, toggle }) {
   const { logout } = useContext(AuthContext);
@@ -19,7 +19,6 @@ export default function AdminSidebar({ open, toggle }) {
 
   return (
     <aside className={`admin-sidebar ${open ? "open" : ""}`}>
-      
       {/* Sidebar Header */}
       <div className="sidebar-header">
         <h2>Copia</h2>
@@ -63,8 +62,7 @@ export default function AdminSidebar({ open, toggle }) {
 
       {/* Logout Button */}
       <div className="sidebar-logout" onClick={handleLogout}>
-        <span className="sidebar-icon">
-        </span>
+        <span className="sidebar-icon"></span>
         Logout
       </div>
     </aside>

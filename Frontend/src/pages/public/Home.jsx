@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import Navbar from "../../components/Navbar";
-import ProductCard from "../../components/ProductCard";
-import CategoryCard from "../../components/CategoryCard";
-import Banner from "../../components/Banner";
+import Navbar from "../../components/user/Navbar";
+import ProductCard from "../../components/user/ProductCard";
+import CategoryCard from "../../components/user/CategoryCard";
+import Banner from "../../components/user/Banner";
 import { useProducts } from "../../hooks/useProducts";
 import { getCategories } from "../../services/productService";
-import "../../styles/home.css";
-import Loader from "../../components/Loader";
+import "../../styles/user/home.css";
+import Loader from "../../components/shared/Loader";
 
 // Scroll arrow component
 const ScrollDownArrow = ({ onClick }) => (
@@ -100,7 +100,9 @@ const Home = () => {
           {searchQuery ? `Search results for "${searchQuery}"` : "Products"}
         </h2>
         {selectedCategory && (
-          <p className="active-category">Showing: <span>{selectedCategory}</span></p>
+          <p className="active-category">
+            Showing: <span>{selectedCategory}</span>
+          </p>
         )}
         <div className="products-list">
           {loading ? (

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../components/Navbar";
-import Loader from "../../components/Loader";
+import Navbar from "../../components/user/Navbar";
+import Loader from "../../components/shared/Loader";
 import { getMyOrders } from "../../services/orderService";
-import "../../styles/orders.css";
+import "../../styles/user/orders.css";
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);

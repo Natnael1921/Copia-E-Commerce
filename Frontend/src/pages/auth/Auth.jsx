@@ -2,9 +2,9 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { loginUser, registerUser } from "../../services/authService";
-import "../../styles/Auth.css";
-import Loader from "../../components/Loader";
-import { toastSuccess, toastError } from "../../components/Toast";
+import "../../styles/shared/auth.css";
+import Loader from "../../components/shared/Loader";
+import { toastSuccess, toastError } from "../../components/shared/Toast";
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
   const [name, setName] = useState("");

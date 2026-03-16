@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/categoryCard.css";
+import "../../styles/user/categorycard.css";
 
 const CategoryCard = ({ category, products = [], onClick }) => {
   return (

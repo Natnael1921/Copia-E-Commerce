@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../styles/productModal.css";
+import "../../styles/shared/productModal.css";
 
 export default function ProductModal({ close, submit, product }) {
   const [form, setForm] = useState({

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../components/Navbar";
-import Loader from "../../components/Loader";
+import Navbar from "../../components/user/Navbar";
+import Loader from "../../components/shared/Loader";
 import {
   getCart,
   updateCartItem,
   removeCartItem,
   clearCart,
 } from "../../services/cartService";
-import "../../styles/cart.css";
+import "../../styles/user/cart.css";
 import { placeOrder } from "../../services/orderService";
 import { useNavigate } from "react-router-dom";
-import { toastError } from "../../components/Toast";
+import { toastError } from "../../components/shared/Toast";
 export default function CartPage() {
   const [cartItems, setCartItems] = useState([]);
   const [showCheckout, setShowCheckout] = useState(false);

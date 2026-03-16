@@ -1,17 +1,21 @@
 import { useState, useEffect } from "react";
-import AdminSidebar from "../../components/AdminSidebar";
-import ProductModal from "../../components/ProductModal";
-import ProductRow from "../../components/ProductRow";
+import AdminSidebar from "../../components/admin/AdminSidebar";
+import ProductModal from "../../components/admin/ProductModal";
+import ProductRow from "../../components/admin/ProductRow";
 import { useProducts } from "../../hooks/useProducts";
-import Loader from "../../components/Loader";
-import { toastSuccess, toastError, toastConfirm } from "../../components/Toast";
+import Loader from "../../components/shared/Loader";
+import {
+  toastSuccess,
+  toastError,
+  toastConfirm,
+} from "../../components/shared/Toast";
 import {
   createProduct,
   updateProduct,
   deleteProduct,
 } from "../../services/adminProductService";
 
-import "../../styles/adminProducts.css";
+import "../../styles/admin/adminProducts.css";
 
 export default function AdminProducts() {
   const { products, loading } = useProducts();
