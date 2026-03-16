@@ -80,6 +80,10 @@ body{
   gap: 1rem;
   flex-wrap: wrap;
 }
+.active-category span{
+  color: #1d4ed8;
+  font-weight: bold;
+}
 /* Responsive*/
 @media screen and (max-width: 1024px) {
   .home-header {

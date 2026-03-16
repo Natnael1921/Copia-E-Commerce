@@ -1,9 +1,9 @@
 import React from "react";
 import "../styles/categoryCard.css";
 
-const CategoryCard = ({ category, products = [] }) => {
+const CategoryCard = ({ category, products = [], onClick }) => {
   return (
-    <div className="category-card">
+    <div className="category-card" onClick={() => onClick(category)}>
 
       <div className="category-image-grid">
         {products.length > 0 ? (

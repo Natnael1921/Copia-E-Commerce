@@ -19,7 +19,7 @@ const ScrollDownArrow = ({ onClick }) => (
 const Home = () => {
   const [categories, setCategories] = useState([]);
   const [categoryLoading, setCategoryLoading] = useState(true);
-
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const productsRef = useRef(null);
   const location = useLocation();
 
@@ -39,12 +39,24 @@ const Home = () => {
     fetchCategories();
   }, []);
 
-  const displayProducts = products.length ? products : Array(8).fill({});
+  const filteredProducts = selectedCategory
+    ? products.filter((p) => p.category === selectedCategory)
+    : products;
+
+  const displayProducts = filteredProducts.length
+    ? filteredProducts
+    : Array(8).fill({});
 
   const scrollToProducts = () => {
     productsRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
 
+    productsRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  };
   return (
     <div className="home-page">
       <Navbar />
@@ -73,6 +85,7 @@ const Home = () => {
                     key={idx}
                     category={cat}
                     products={categoryProducts}
+                    onClick={handleCategoryClick}
                   />
                 );
               })
@@ -86,7 +99,9 @@ const Home = () => {
         <h2>
           {searchQuery ? `Search results for "${searchQuery}"` : "Products"}
         </h2>
-
+        {selectedCategory && (
+          <p className="active-category">Showing: <span>{selectedCategory}</span></p>
+        )}
         <div className="products-list">
           {loading ? (
             <Loader />
