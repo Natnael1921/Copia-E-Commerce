@@ -1,42 +1,45 @@
 import React, { useContext, useEffect, useState } from "react";
 import "../../styles/user/navbar.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, logout } = useContext(AuthContext);
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
+
+  // debounce
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedQuery(searchQuery);
-    }, 400); // delay
-
+    }, 400);
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
   useEffect(() => {
+    if (location.pathname !== "/") return;
+
     if (!debouncedQuery.trim()) {
       navigate("/");
       return;
     }
 
     navigate(`/?search=${debouncedQuery}`);
-  }, [debouncedQuery, navigate]);
-  const handleSearch = () => {
-    if (!searchQuery.trim()) return;
+  }, [debouncedQuery, location.pathname, navigate]);
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
     navigate(`/?search=${searchQuery}`);
   };
-  const handleAuthButton = () => {
-    if (user) {
-      logout();
-      navigate("/");
-    } else {
-      navigate("/auth");
-    }
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
     setMenuOpen(false);
   };
 
@@ -44,14 +47,15 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      {/* Left Side */}
+      {/* LEFT */}
       <div className="navbar-left">
         <div className="logo-container" onClick={() => navigate("/")}>
           <img src="/logo.png" alt="Copia Logo" className="logo" />
           <span>Copia</span>
         </div>
 
-        <div className="search-bar">
+        {/* SEARCH */}
+        <form className="search-bar" onSubmit={handleSearch}>
           <select className="category-select">
             <option value="">All</option>
           </select>
@@ -65,63 +69,64 @@ const Navbar = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
 
-            <button className="search-btn" onClick={handleSearch}>
+            <button type="submit" className="search-btn">
               <img src="/searchIcon.png" alt="search" />
             </button>
           </div>
-        </div>
+        </form>
       </div>
 
-      {/* Right Side */}
+      {/* RIGHT */}
       <div className="navbar-right">
-        <div
-          className="cart-icon"
-          onClick={() => navigate("/cart")}
-          title="Cart"
-        >
-          <img src="/cartIcon.png" alt="cart" />
-        </div>
-
-        {/* Desktop links */}
-        <div className="desktop-links">
-          {user && (
-            <>
-              <span className="welcome-text">
-                Welcome, {user.name || user.email}!
-              </span>
-              <button className="nav-link" onClick={() => navigate("/orders")}>
-                Orders
-              </button>
-            </>
-          )}
-          <button className="signin-btn" onClick={handleAuthButton}>
-            {user ? "Logout" : "Sign in"}
+        {!user ? (
+          <button
+            type="button"
+            className="signin-btn"
+            onClick={() => navigate("/auth")}
+          >
+            Sign in
           </button>
-        </div>
-
-        {/* Hamburger menu for mobile/tablet */}
-        <div className="hamburger" onClick={toggleMenu}>
-          {menuOpen ? "✕" : "☰"}
-        </div>
-      </div>
-
-      {/* Mobile menu */}
-      {menuOpen && (
-        <div className="mobile-menu">
-          {user && (
-            <>
+        ) : (
+          <>
+            {/* MOBILE */}
+            <div className="cart-icon" onClick={() => navigate("/cart")}>
+              <img src="/cartIcon.png" alt="cart" />
+            </div>
+            <div className="desktop-links">
               <button
-                onClick={() => {
-                  navigate("/orders");
-                  setMenuOpen(false);
-                }}
+                type="button"
+                className="orders-btn"
+                onClick={() => navigate("/orders")}
               >
                 Orders
               </button>
-            </>
-          )}
-          <button onClick={handleAuthButton}>
-            {user ? "Logout" : "Sign in"}
+
+              <button type="button" onClick={handleLogout} className="log-out">
+                Logout
+              </button>
+            </div>
+            <div className="hamburger" onClick={toggleMenu}>
+              {menuOpen ? "✕" : "☰"}
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* MOBILE MENU */}
+      {user && menuOpen && (
+        <div className="mobile-menu">
+          <button
+            type="button"
+            onClick={() => {
+              navigate("/orders");
+              setMenuOpen(false);
+            }}
+          >
+            Orders
+          </button>
+
+          <button type="button" onClick={handleLogout}>
+            Logout
           </button>
         </div>
       )}

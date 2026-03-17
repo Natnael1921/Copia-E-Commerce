@@ -11,9 +11,12 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-   width: 150px;
-  min-height: 230px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  width: 150px;
+  min-height: 160px;
+  min-width: 160px;
 }
 
 .product-card:hover {
@@ -66,7 +69,9 @@
   border-radius: 50%;
   padding: 6px;
   box-shadow: 0 3px 8px rgba(47, 32, 214, 0.18);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .cart-overlay:hover {
@@ -79,10 +84,11 @@
 @media (max-width: 768px) {
   .product-card {
     padding: 0.9rem;
+    min-width: 140px;
   }
 
   .product-image-wrapper img {
-    max-width: 120px;
+    width: 130px;
     height: 120px;
   }
 }

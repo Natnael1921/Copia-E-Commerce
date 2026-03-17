@@ -9,27 +9,31 @@ import { getCategories } from "../../services/productService";
 import "../../styles/user/home.css";
 import Loader from "../../components/shared/Loader";
 
-// Scroll arrow component
 const ScrollDownArrow = ({ onClick }) => (
   <div className="scroll-down-arrow" onClick={onClick}>
     ⬇
   </div>
 );
 
+const normalize = (str) => str?.toLowerCase().trim();
+
+const getCategoryId = (cat) => "cat-" + normalize(cat).replace(/\s+/g, "-");
+
 const Home = () => {
   const [categories, setCategories] = useState([]);
   const [categoryLoading, setCategoryLoading] = useState(true);
+
   const [selectedCategory, setSelectedCategory] = useState(null);
+
   const productsRef = useRef(null);
   const location = useLocation();
 
-  // Get search query from URL
   const queryParams = new URLSearchParams(location.search);
   const searchQuery = queryParams.get("search") || "";
 
-  // Fetch products using search query
   const { products, loading } = useProducts(searchQuery);
 
+  //  Fetch categories
   useEffect(() => {
     const fetchCategories = async () => {
       const data = await getCategories();
@@ -39,34 +43,40 @@ const Home = () => {
     fetchCategories();
   }, []);
 
-  const filteredProducts = selectedCategory
-    ? products.filter((p) => p.category === selectedCategory)
-    : products;
-
-  const displayProducts = filteredProducts.length
-    ? filteredProducts
-    : Array(8).fill({});
-
   const scrollToProducts = () => {
     productsRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
-
-    productsRef.current?.scrollIntoView({
-      behavior: "smooth",
-    });
   };
+
+  useEffect(() => {
+    if (!selectedCategory) return;
+
+    const id = getCategoryId(selectedCategory);
+
+    // wait for DOM render
+    requestAnimationFrame(() => {
+      const element = document.getElementById(id);
+
+      if (element) {
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    });
+  }, [selectedCategory, products]);
+
   return (
     <div className="home-page">
       <Navbar />
 
-      {/* Banner */}
       <Banner scrollToProducts={scrollToProducts} />
 
-      {/* Categories Section (Hidden when searching) */}
       {!searchQuery && (
-        <section className="categories" style={{ position: "relative" }}>
+        <section className="categories">
           <ScrollDownArrow onClick={scrollToProducts} />
 
           <h2>Categories</h2>
@@ -77,7 +87,7 @@ const Home = () => {
             ) : (
               categories.map((cat, idx) => {
                 const categoryProducts = products
-                  .filter((p) => p.category === cat)
+                  .filter((p) => normalize(p.category) === normalize(cat))
                   .slice(-4);
 
                 return (
@@ -85,7 +95,7 @@ const Home = () => {
                     key={idx}
                     category={cat}
                     products={categoryProducts}
-                    onClick={handleCategoryClick}
+                    onClick={() => handleCategoryClick(cat)}
                   />
                 );
               })
@@ -94,27 +104,55 @@ const Home = () => {
         </section>
       )}
 
-      {/* Products Section */}
+      {/* PRODUCTS */}
       <section className="products" ref={productsRef}>
         <h2>
           {searchQuery ? `Search results for "${searchQuery}"` : "Products"}
         </h2>
+
         {selectedCategory && (
           <p className="active-category">
             Showing: <span>{selectedCategory}</span>
           </p>
         )}
-        <div className="products-list">
-          {loading ? (
-            <Loader />
-          ) : products.length === 0 && searchQuery ? (
-            <p className="no-results">No products found</p>
-          ) : (
-            displayProducts.map((prod, idx) => (
-              <ProductCard key={prod._id || idx} product={prod} />
-            ))
-          )}
-        </div>
+
+        {loading ? (
+          <Loader />
+        ) : searchQuery ? (
+          <div className="products-list">
+            {products.length === 0 ? (
+              <p className="no-results">No products found</p>
+            ) : (
+              products.map((prod, idx) => (
+                <ProductCard key={prod._id || idx} product={prod} />
+              ))
+            )}
+          </div>
+        ) : (
+          categories.map((cat, idx) => {
+            const categoryProducts = products.filter(
+              (p) => normalize(p.category) === normalize(cat),
+            );
+
+            if (categoryProducts.length === 0) return null;
+
+            return (
+              <div
+                key={idx}
+                id={getCategoryId(cat)}
+                className="category-section"
+              >
+                <h3 className="category-title">{cat}</h3>
+
+                <div className="horizontal-scroll">
+                  {categoryProducts.map((prod, i) => (
+                    <ProductCard key={prod._id || i} product={prod} />
+                  ))}
+                </div>
+              </div>
+            );
+          })
+        )}
       </section>
     </div>
   );

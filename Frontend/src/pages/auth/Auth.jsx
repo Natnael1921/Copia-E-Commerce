@@ -5,6 +5,7 @@ import { loginUser, registerUser } from "../../services/authService";
 import "../../styles/shared/auth.css";
 import Loader from "../../components/shared/Loader";
 import { toastSuccess, toastError } from "../../components/shared/Toast";
+import Navbar from "../../components/user/Navbar";
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
   const [name, setName] = useState("");
@@ -46,6 +47,7 @@ export default function Auth() {
 
   return (
     <div className="auth-container">
+      <Navbar />
       <div className="auth-card">
         <h2>{isLogin ? "Welcome Back" : "Create Account"}</h2>
 

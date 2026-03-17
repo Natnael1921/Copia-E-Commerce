@@ -8,7 +8,7 @@
   top: 0;
   width: 100%;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.97); 
+  background: rgba(255, 255, 255, 0.97);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
   font-family: "Inter", sans-serif;
 }
@@ -23,11 +23,7 @@
   font-size: 27px;
   font-weight: bold;
   font-family: "Langar", cursive;
-  background: linear-gradient(
-    90deg,
-    #052251,
-    #4176E0
-  ); 
+  background: linear-gradient(90deg, #052251, #4176e0);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -106,6 +102,7 @@
   cursor: pointer;
   font-size: 0.95rem;
   font-weight: 500;
+  margin-left: 10px;
 }
 
 .cart-icon {
@@ -125,7 +122,7 @@
     font-size: 22px;
   }
   .signin-btn {
-    padding: 0.3rem 0.7rem;
+    padding: 0.6rem 0.7rem;
     font-size: 0.85rem;
   }
   .cart-icon img {
@@ -155,7 +152,7 @@
   }
 
   .category-select {
-    display: none;  
+    display: none;
   }
 
   .navbar-right {
@@ -165,11 +162,11 @@
     height: 26px;
   }
   .navbar-right {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding-right: 1rem;
-}
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-right: 1rem;
+  }
 }
 
 /* Extra small: <= 480px */
@@ -184,7 +181,7 @@
 
   .signin-btn {
     font-size: 0.75rem;
-    padding: 0.25rem 0.5rem;
+    padding: 0.55rem 0.5rem;
   }
 
   .cart-icon img {
@@ -209,7 +206,7 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 1000;
 }
 
@@ -220,7 +217,14 @@
   text-align: left;
   cursor: pointer;
 }
-
+.desktop-links .orders-btn {
+  font-weight: 900;
+}
+.desktop-links .log-out {
+  border: 1px solid lightblue;
+  border-radius: 10px;
+  padding: 8px 18px;
+}
 /* Media Queries */
 
 /* Tablet & Mobile <= 1024px */
@@ -245,5 +249,31 @@
   .navbar-left {
     gap: 0.5rem;
     flex: 1;
+  }
+}
+/* Desktop links */
+.desktop-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.desktop-links button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 1024px) {
+  .desktop-links {
+    display: none;
+  }
+}
+
+/* Hide mobile icons on desktop */
+@media screen and (min-width: 1025px) {
+  .hamburger {
+    display: none;
   }
 }

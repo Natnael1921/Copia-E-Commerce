@@ -1,8 +1,9 @@
 .banner {
   position: relative;
-  margin: 0 20px;
+  margin: 0 10px;
+  width: calc(100%-20px);
   border-radius: 25px;
-  background: linear-gradient(to right,#517ED7,#D9D9D9);
+  background: linear-gradient(to right, #517ed7, #d9d9d9);
   padding: 2rem;
   overflow: hidden;
 }
@@ -11,6 +12,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
 }
 
 .banner-text h1 {
@@ -39,13 +41,13 @@
   top: 50%;
   transform: translateY(-50%);
   border: none;
-  background: rgba(255,255,255,0.4);
+  background: rgba(255, 255, 255, 0.4);
   width: 30px;
   height: 30px;
   border-radius: 50%;
   cursor: pointer;
   font-size: 20px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .banner-btn:hover {
@@ -58,4 +60,58 @@
 
 .banner-btn.right {
   right: 3px;
+}
+@media (max-width: 768px) {
+  .banner-content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .banner-text {
+    flex: 1;
+  }
+
+  .banner-text h1 {
+    font-size: 1.4rem;
+    line-height: 1.3;
+  }
+
+  .banner-text p {
+    font-size: 0.75rem;
+    max-width: 180px;
+  }
+
+  .banner-image img {
+    width: 160px;
+    max-height: 120px;
+  }
+
+  .shop-btn {
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+  }
+}
+@media (max-width: 480px) {
+  .banner-content {
+    gap: 0.5rem;
+  }
+
+  .banner-text h1 {
+    font-size: 1.1rem;
+  }
+
+  .banner-text p {
+    font-size: 0.7rem;
+    max-width: 140px;
+  }
+
+  .banner-image img {
+    width: 140px;
+  }
+
+  .shop-btn {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.8rem;
+  }
 }

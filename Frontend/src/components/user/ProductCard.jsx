@@ -1,15 +1,16 @@
 import React from "react";
 import "../../styles/user/productcard.css";
 import { addToCart } from "../../services/cartService";
+import { toastSuccess, toastError } from "../../components/shared/Toast";
 
 const ProductCard = ({ product }) => {
   const handleAddToCart = async () => {
     try {
       await addToCart(product._id);
-      alert("Added to cart");
+      toastSuccess("Added to cart");
     } catch (error) {
       console.error(error);
-      alert("Please login first");
+      toastError("Please login first");
     }
   };
 
