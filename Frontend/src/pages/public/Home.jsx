@@ -8,7 +8,8 @@ import { useProducts } from "../../hooks/useProducts";
 import { getCategories } from "../../services/productService";
 import "../../styles/user/home.css";
 import Loader from "../../components/shared/Loader";
-
+import CategorySkeleton from "../../components/user/CategorySkeleton";
+import ProductSkeleton from "../../components/user/ProductSkeleton";
 const ScrollDownArrow = ({ onClick }) => (
   <div className="scroll-down-arrow" onClick={onClick}>
     ⬇
@@ -81,26 +82,26 @@ const Home = () => {
 
           <h2>Categories</h2>
 
-          <div className="categories-list">
-            {categoryLoading ? (
-              <Loader />
-            ) : (
-              categories.map((cat, idx) => {
-                const categoryProducts = products
-                  .filter((p) => normalize(p.category) === normalize(cat))
-                  .slice(-4);
+         <div className={`categories-list ${categoryLoading ? "skeleton-mode" : ""}`}>
+  {categoryLoading
+    ? [...Array(10)].map((_, i) => (
+        <CategorySkeleton key={i} />
+      ))
+    : categories.map((cat, idx) => {
+        const categoryProducts = products
+          .filter((p) => normalize(p.category) === normalize(cat))
+          .slice(-2);
 
-                return (
-                  <CategoryCard
-                    key={idx}
-                    category={cat}
-                    products={categoryProducts}
-                    onClick={() => handleCategoryClick(cat)}
-                  />
-                );
-              })
-            )}
-          </div>
+        return (
+          <CategoryCard
+            key={idx}
+            category={cat}
+            products={categoryProducts}
+            onClick={() => handleCategoryClick(cat)}
+          />
+        );
+      })}
+</div>
         </section>
       )}
 
@@ -117,7 +118,11 @@ const Home = () => {
         )}
 
         {loading ? (
-          <Loader />
+          <div className="products-list">
+            {[...Array(8)].map((_, i) => (
+              <ProductSkeleton key={i} />
+            ))}
+          </div>
         ) : searchQuery ? (
           <div className="products-list">
             {products.length === 0 ? (

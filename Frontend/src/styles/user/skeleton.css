@@ -1,0 +1,60 @@
+
+/* Base skeleton */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: #aebbeb;
+  border-radius: 10px;
+}
+
+/* SHIMMER EFFECT */
+.skeleton::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 150%;
+  height: 100%;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.8),
+    transparent
+  );
+
+  animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    left: 100%;
+  }
+}
+
+/* image */
+.skeleton-image {
+  width: 100%;
+  height: 150px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+/* text */
+.skeleton-text {
+  height: 14px;
+  border-radius: 6px;
+  margin: 6px 0;
+  width: 80%;
+}
+
+.skeleton-text.small {
+  width: 50%;
+}
+
+/* category grid boxes */
+.skeleton-box {
+  width: 100%;
+  height: 60px;
+  border-radius: 8px;
+}
